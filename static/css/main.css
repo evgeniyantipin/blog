@@ -1,0 +1,47 @@
+
+#blog-title * {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 900;
+    font-size: 60px;
+    padding: 0 35px;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+
+/*POST STYLES*/
+
+.post {
+    margin: 20px 0;
+    color: #434343;
+    padding: 20px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.post-date {
+    color: #B3B3B1;
+}
+
+.post-title {
+    text-decoration: none;
+    color: #f57365;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
+}
+
+.post-title:hover {
+    text-decoration: none;
+}
+
+.post-body {
+    line-height: 1.45em;
+    font-family: 'PT Serif', serif;
+    font-size: 1.2em;
+}
+
+.post-comments {
+    text-decoration: none;
+    /*margin: 20px 0;*/
+}

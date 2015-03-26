@@ -1,0 +1,21 @@
+{% load endless %}
+
+{% paginate 2 posts %}
+{% for post in posts %}
+      <div class="post">
+          <h2><a class="post-title" href="{{ post.slug }}">{{ post.title }}</a></h2>
+          {% if post.body|length > 1000 %}
+              <p class="post-body">{{ post.body|truncatechars:1000 }} <a href="{{ post.slug }}">Читать полностью</a></p>
+          {% else %}
+              <p class="post-body">{{ post.body }}</p>
+          {% endif %}
+          <ul class="post-meta list-inline">
+              <li><p class="post-date">Размещено {{ post.created|date:'j E, Y' }} в категории </p></li>
+              {% if post.comment_set.all %}
+                  {% load pytils_numeral %}
+                  <li><a class="post-comments" href="{{ post.slug }}#comments">{{ post.comment_set.all|length }} {{ post.comment_set.all|length|choose_plural:"комментарий, комментария, комментариев" }}</a></li>
+              {% endif %}
+          </ul>
+      </div>
+  {% endfor %}
+{% show_more 'even more' %}

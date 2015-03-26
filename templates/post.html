@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="RU">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+    <ul class="list-inline">
+    {%  for tag in post.tag.all %}
+        <li>{{ tag }}</li>
+    {% endfor %}
+    </ul>
+    <a href="/">Назад ко всем записям</a>
+</body>
+</html>

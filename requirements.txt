@@ -1,0 +1,4 @@
+Django==1.7.4
+django-endless-pagination==2.0
+pytils==0.3
+Unidecode==0.4.17
