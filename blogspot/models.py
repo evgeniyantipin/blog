@@ -18,6 +18,13 @@ class Tag(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -25,7 +32,8 @@ class Post(models.Model):
     modified = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User)
     slug = models.SlugField(default="", unique=True)
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(Tag, blank=True)
+    category = models.ForeignKey(Category, null=True)
 
     def __str__(self):
         return self.title
@@ -33,9 +41,12 @@ class Post(models.Model):
 
 class Comment(models.Model):
     name = models.CharField(max_length=50)
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     email = models.EmailField(max_length=50)
     body = models.TextField()
     post = models.ForeignKey(Post)
+
+
 
     def __str__(self):
         return self.body

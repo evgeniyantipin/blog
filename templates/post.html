@@ -1,17 +1,45 @@
-<!doctype html>
-<html lang="RU">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.body }}</p>
+{% extends 'index.html' %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+    <h1 class="post-title">{{ post.title }}</h1>
+    <ul class="post-meta list-inline">
+        <li><p class="post-date">{{ post.created|date:'j E, Y' }}</p></li>
+    </ul>
+    <p class="post-body">{{ post.body }}</p>
     <ul class="list-inline">
     {%  for tag in post.tag.all %}
         <li>{{ tag }}</li>
     {% endfor %}
     </ul>
+    {% if post.comment_set.all %}
+    <div id="comments">
+        {% load pytils_numeral %}
+        <h3 class="num-comments">{{ post.comment_set.all|length }} {{ post.comment_set.all|length|choose_plural:"комментарий, комментария, комментариев" }}</h3>
+        {% for comment in post.comment_set.all %}
+            <div class="comment">
+                {% load pytils_dt %}
+                <div class="comment-meta">
+                    <h4><a href="mailto:{{ comment.email }}">{{ comment.name }}</a></h4>
+                    <span> {{ comment.date|distance_of_time:2 }}</span>
+                </div>
+                <div class="comment-body">
+                    <p>{{ comment.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Оставить комментарий</legend>
+            {{ commentform.as_ul }}
+            <button>Отправить</button>
+        </fieldset>
+    </form>
+
     <a href="/">Назад ко всем записям</a>
-</body>
-</html>
+{% endblock %}

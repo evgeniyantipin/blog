@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from . import models
+from .forms import CommentForm
 
 
 def index(request, template='index.html', ajax='index_entries.html'):
@@ -12,4 +14,11 @@ def index(request, template='index.html', ajax='index_entries.html'):
 
 def post(request, slug):
     single_post = models.Post.objects.get(slug=slug)
-    return render(request, 'post.html', {'post': single_post},)
+
+    comment_form = CommentForm(request.POST or None)
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.post = single_post
+        comment.save()
+    return render(request, 'post.html', {'post': single_post, 'commentform': comment_form},)
